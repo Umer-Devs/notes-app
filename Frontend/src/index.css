@@ -1,1 +1,51 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Vazirmatn:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Space+Grotesk:wght@300..700&family=Vazirmatn:wght@100..900&display=swap');
+
+
+
+
+@theme {
+  /* fonts */
+  --font-space-grotesk: "Roboto", sans-serif;
+
+  /* colors */
+  --color-primary-light: #e0e1dd;
+  --color-secondary-light: #1b263b;
+  --color-dark-brown:#415a77;
+  --color-primary-dark: #0d1b2a;
+}
+@layer {
+  .custom-padding {
+    @apply px-4 md:px-9 lg:px-16 xl:px-20 2xl:px-40;
+  }
+ 
+  h1 {
+    @apply text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl;
+  }
+  p {
+    @apply md:text-lg;
+  }
+  
+  .floating-element {
+    
+    animation: float 3s ease-in-out infinite; 
+  }
+}
+
+body {
+  overflow-x: hidden !important;
+  font-family: var(--font-space-grotesk);
+}
+/* float animations keyframes  */
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px); 
+  }
+  100% {
+    transform: translateY(0); 
+  }
+}
