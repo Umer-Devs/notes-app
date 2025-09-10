@@ -1,0 +1,1 @@
+in this project i will developeted a notes taking app  
