@@ -5,7 +5,7 @@ import express, { json } from 'express';
 import { connectDb } from './database/index.js';
 import { Signup } from './models/userSignup.models.js';
 dotenv.config({
-    Path: './.env'
+    path: './.env'
 });
 const app = express();
 app.use(cors())
@@ -27,11 +27,11 @@ app.post('/login', async (req,res)=>{
       if(!checkEmail){
         res.status(400).send("email was not correct");
    } 
-      const checkPassword = await Signup.findOne({password});
-
-      if(!checkPassword){
-        res.status(400).send("password  was not correct");
-   } 
+      // 2. Password compare karo (bcrypt.compare)
+    const isMatch = await bcrypt.compare(password, checkEmail.password);
+    if (!isMatch) {
+      return res.status(400).send("Invalid email or password");
+    }
    res.status(200).send("login sucessfully") ;
 
 }
@@ -43,27 +43,28 @@ app.post('/login', async (req,res)=>{
 });
 
 
-//    signup form  post 
+
 app.post('/signup', async (req, res) => {
   try {
-    const { email, password, name } = req.body;
-
-    // 1. check duplicate email
+    const { email, password, username } = req.body;
+const salt = await bcrypt.genSalt(10);
+const hashedPassword = await bcrypt.hash(password, salt);
+   
     const duplicateEmail = await Signup.findOne({ email });
     if (duplicateEmail) {
-      return res.status(200).send("This email already exists");
+      return res.status(400).send("This email already exists");
     }
 
-    // 2. create user
-    const log = new Signup({ name, email, password });
+    
+    const log = new Signup({ username, email, password:hashedPassword });
     const saveSignup = await log.save();
 
     console.log("User saved:", saveSignup);
     res.status(201).send("Signup successful");
-  } catch (error) {
-    console.log("Signup error:", error);
-    res.status(500).send("Signup failed");
-  }
+  }catch (error) {
+  console.error("Signup error:", error.message);
+  res.status(500).send("Signup failed: " + error.message);
+}
 });
 
 

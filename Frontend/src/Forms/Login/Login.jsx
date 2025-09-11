@@ -59,15 +59,16 @@ const Login = () => {
               required
             />
           </div>
-          <div className='text-end'>
-            <Link to={'/sign-up'} className='text-white font-semibold underline'>Signup</Link>
-          </div>
+          
           <button
             type="submit"
             className="w-full bg-blue-600 text-white rounded-md py-3 text-lg font-semibold hover:bg-blue-700 transition-colors duration-300"
           >
             Login
           </button>
+          <div className='text-end'>
+            <Link to={'/sign-up'} className='text-white font-semibold underline'>Signup</Link>
+          </div>
         </form>
       </div>
     </section>

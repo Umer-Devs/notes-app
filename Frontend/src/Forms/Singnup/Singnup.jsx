@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const Singnup = () => {
     const navigate = useNavigate()
   const [form, setForm] = useState({
@@ -25,17 +25,19 @@ const Singnup = () => {
     console.log("Data was sent successfully:", res.data);
 
     setForm({ password: "", email: "", username: "" });
+    navigate('/')
 
-    alert(res.data); // backend ka success message show karega
-  } catch (error) {
+    
+  }
+   catch (error) {
     if (error.response) {
-      // Backend ne error bheja hai
+      
       alert("Signup failed: " + error.response.data);
     } else if (error.request) {
-      // Request gaya hi nahi
+      
       alert("No response from server. Please try again later.");
     } else {
-      // Axios ka issue
+     
       alert("Error: " + error.message);
     }
     console.error("Signup error:", error);
@@ -90,6 +92,9 @@ const Singnup = () => {
           >
             Submit
           </button>
+          <div className='text-end'>
+            <Link to={'/'} className='text-white font-semibold underline'>Login</Link>
+          </div>
         </form>
       </div>
     </section>
