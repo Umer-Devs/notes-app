@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate()
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -23,9 +25,11 @@ const Login = () => {
     console.log("  Login successful:", res.data);
 
     alert(res.data); // backend ka message show karega
+    localStorage.setItem("isLoggedIn",true);
+    navigate('/')
   } catch (error) {
-    console.error(" Login failed:", error.response?.data || error.message);
-    alert(error.response?.data?.message || "Something went wrong");
+    alert(" Login failed:", error.response?.data || error.message);
+    alert(error.response?.data?.message || "failed to login");
   }
 };
 

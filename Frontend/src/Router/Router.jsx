@@ -2,6 +2,7 @@ import React from 'react';
 import {BrowserRouter, Route, Routes}  from 'react-router-dom';
 import { Login, Singnup } from '../Forms';
 import { Notes } from '../pages';
+import ProtectedRoutes from './ProtectedRoutes/ProtectedRoutes';
 
 const Router = () => {
   return (
@@ -10,9 +11,20 @@ const Router = () => {
   <BrowserRouter>
    
    <Routes>
-    <Route path='/' element={<Login/>} />
+    <Route path='/login' element={<Login/>} />
     <Route path='/sign-up' element={<Singnup/>} />
-    <Route path='/note' element={<Notes/>} />
+    <Route path='/' element={
+      
+      <ProtectedRoutes>
+      
+      <Notes/>
+      
+      </ProtectedRoutes>
+      } 
+      
+      
+      
+      />
    </Routes>
 
   </BrowserRouter>  

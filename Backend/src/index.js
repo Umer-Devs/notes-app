@@ -25,9 +25,9 @@ app.post('/login', async (req,res)=>{
    try {
       const checkEmail = await Signup.findOne({email});
       if(!checkEmail){
-        res.status(400).send("email was not correct");
+        res.status(400).send("email was not found");
    } 
-      // 2. Password compare karo (bcrypt.compare)
+      
     const isMatch = await bcrypt.compare(password, checkEmail.password);
     if (!isMatch) {
       return res.status(400).send("Invalid email or password");
