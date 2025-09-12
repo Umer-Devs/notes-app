@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes}  from 'react-router-dom';
 import { Login, Singnup } from '../Forms';
-import { Notes } from '../pages';
+import { CreateNotes, Notes } from '../pages';
 import ProtectedRoutes from './ProtectedRoutes/ProtectedRoutes';
 
 const Router = () => {
@@ -13,6 +13,7 @@ const Router = () => {
    <Routes>
     <Route path='/login' element={<Login/>} />
     <Route path='/sign-up' element={<Singnup/>} />
+    <Route path='/create-notes' element={<CreateNotes/>} />
     <Route path='/' element={
       
       <ProtectedRoutes>

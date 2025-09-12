@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { unknow } from '../../assets';
 
+const Sidebar = () => {
+  
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
-const Sidebar = ({ isSidebarOpen, toggleSidebar, navLinks }) => {
-      const navLinks = ["Notes", "Edit Notes", "Delete Notes"];
+  const navLinks = [
+    { name: "Notes", path: "/" },
+    { name: "Create Notes", path: "/create-notes" },
+    { name: "Edit Notes", path: "/edit-notes" },
+    { name: "Delete Notes", path: "/delete-notes" }
+  ];
+
   return (
     <>
       {/* Sidebar */}
@@ -26,13 +38,20 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, navLinks }) => {
           </p>
         </div>
 
-        <ul className="flex flex-col items-center gap-6 font-bold tracking-widest cursor-pointer">
-          {navLinks.map((value, index) => (
-            <li
-              key={index}
-              className="text-white text-lg sm:text-xl hover:text-primary-light transition-colors duration-200"
-            >
-              {value}
+        <ul className="flex flex-col items-center  w-full gap-6 font-bold tracking-widest">
+          {navLinks.map((link, index) => (
+            <li key={index} className=''>
+              <NavLink
+                to={link.path}
+                className={({ isActive }) =>
+                  `text-white text-lg sm:text-xl transition-colors duration-200 bg-primary-dark p-3 w-full  px-4 py-2 rounded-md ${
+                    isActive ? 'text-primary-light bg-dark-blue' : 'hover:text-primary-light hover:bg-dark-blue'
+                  }`
+                }
+                onClick={toggleSidebar}
+              >
+                {link.name}
+              </NavLink>
             </li>
           ))}
         </ul>

@@ -1,1 +1,1 @@
-export {default as side} from "./Sidebar/Sidebar"
+export {default as Sidebar } from "./Sidebar/Sidebar"

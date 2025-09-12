@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import express, { json } from 'express';
 import { connectDb } from './database/index.js';
 import { Signup } from './models/userSignup.models.js';
+import { Notes } from './models/userNotes.models.js';
 dotenv.config({
     path: './.env'
 });
@@ -66,6 +67,44 @@ const hashedPassword = await bcrypt.hash(password, salt);
   res.status(500).send("Signup failed: " + error.message);
 }
 });
+
+
+// notes data 
+app.post('/notes', async(req,res)=>{
+  const mynotesData = req.body;
+try {
+ 
+  
+  
+    const myNotes = new Notes(mynotesData);
+    const saveNotes = await myNotes.save();
+    console.log("notes data was sucessfully saved in database ",saveNotes);
+    
+  res.status(200).send("the notes  data was sent sucessfully")
+} catch (error) {
+  console.log("there is an error to get the noteess data",error);
+  
+}
+  
+  
+})
+
+// GET NOTES DATA 
+
+app.get('/notes', async(req,res)=>{
+  try {
+    const getNotes = await  Notes.find();
+  res.json(getNotes);
+
+  } catch (error) {
+    console.log('failed to get notes ',error);
+    
+  }
+  
+})
+
+
+
 
 
 
