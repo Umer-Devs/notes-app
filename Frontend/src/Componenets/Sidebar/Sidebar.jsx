@@ -13,8 +13,7 @@ const Sidebar = () => {
   const navLinks = [
     { name: "Notes", path: "/" },
     { name: "Create Notes", path: "/create-notes" },
-    { name: "Edit Notes", path: "/edit-notes" },
-    { name: "Delete Notes", path: "/delete-notes" }
+    
   ];
 
   return (

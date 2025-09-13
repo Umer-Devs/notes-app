@@ -104,6 +104,23 @@ app.get('/notes', async(req,res)=>{
 })
 
 
+app.put('/notes/:id' ,  async (req,res)=>{
+  try {
+         const {id} = req.params;
+        const updatedData = req.body;
+        const updatedNotes = await Notes.findByIdAndUpdate(
+          id,
+          updatedData,
+          {name:true}
+        )
+         
+  } catch (error) {
+    console.log("failed to update the data  ",error);
+    
+  }
+})
+
+
 
 
 

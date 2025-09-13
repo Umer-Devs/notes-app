@@ -28,6 +28,8 @@ const CreateNotes = () => {
     }
   };
 
+ 
+
   return (
     <section className="bg-primary-dark w-full flex min-h-screen">
       <Sidebar />

@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+
 import { SearchCheck } from 'lucide-react';
 import { Sidebar } from '../../Componenets';
 import axios from 'axios';
 
 const Notes = () => {
+  
+const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -73,6 +77,7 @@ const Notes = () => {
     );
   }
 
+
   return (
     <section className="bg-gray-900 w-full flex min-h-screen">
       <Sidebar />
@@ -109,7 +114,13 @@ const Notes = () => {
                   <div className="flex items-start justify-between mb-4">
                     <h2 className="text-white font-bold text-lg flex-1 pr-2 truncate group-hover:text-blue-300 transition-colors">{note.title || 'Untitled'}</h2>
                     <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <button className="bg-blue-600/80 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 shadow-md hover:shadow-lg">
+                      <button
+                       onClick={() =>
+    navigate(`/edit-notes/${note._id}`, {
+      state: { title: note.title, content: note.val }
+    })
+  }
+                        className="bg-blue-600/80 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 shadow-md hover:shadow-lg">
                         Edit
                       </button>
                       <button className="bg-red-600/80 hover:bg-red-500 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 shadow-md hover:shadow-lg">
