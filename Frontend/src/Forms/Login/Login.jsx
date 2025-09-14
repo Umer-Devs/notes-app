@@ -24,8 +24,8 @@ const Login = () => {
     const res = await axios.post("http://localhost:3000/login", form);
     console.log("  Login successful:", res.data);
 
-    alert(res.data); // backend ka message show karega
-    localStorage.setItem("isLoggedIn",true);
+    // alert(res.data); // backend ka message show karega
+    localStorage.setItem("userId", res.data.user.id);
     navigate('/')
   } catch (error) {
     alert(" Login failed:", error.response?.data || error.message);

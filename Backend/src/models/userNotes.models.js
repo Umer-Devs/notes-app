@@ -16,8 +16,8 @@ const userNotes = new mongoose.Schema(
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId, 
-      ref: "Signup", 
-      required: true, 
+      ref: "Signup",
+      required: true,
     },
   },
   { timestamps: true }

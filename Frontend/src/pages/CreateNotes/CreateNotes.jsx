@@ -1,32 +1,47 @@
 import React, { useState } from 'react';
 import { SearchCheck } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Sidebar } from '../../Componenets';
 import axios from 'axios';
 
 const CreateNotes = () => {
+  const navigate = useNavigate()
   const [val, setVal] = useState("");
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handlerChange = async () => {
-    if (!title.trim() || !val.trim()) {
-      alert("Please add both title and note content!");
+ const handlerChange = async () => {
+  if (!title.trim() || !val.trim()) {
+    alert("Please add both title and note content!");
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    // ✅ userId localStorage se nikaal lo
+    const userId = localStorage.getItem("userId");
+
+    // Agar userId nahi mila toh note save nahi karna
+    if (!userId) {
+      alert("User not logged in!");
       return;
     }
 
-    try {
-      setLoading(true);
-      await axios.post("http://localhost:3000/notes", { title, val });
-      setVal("");
-      setTitle("");
-      alert("Note created successfully!"); // Or use a toast notification
-    } catch (error) {
-      console.log("failed to sent notes value", error);
-      alert("Failed to create note. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    // ✅ userId ke sath data backend me bhejo
+    await axios.post("http://localhost:3000/notes", { title, val, userId });
+
+    setVal("");
+    setTitle("");
+    alert("Note created successfully!");
+    navigate('/');
+  } catch (error) {
+    console.log("failed to send notes value", error);
+    alert("Failed to create note. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
 
  
 

@@ -4,30 +4,31 @@ import { useLocation, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const EditNotes = () => {
-  const { state } = useLocation(); // jo data Notes se aaya
-  const { id } = useParams(); // url se id
+  const { state } = useLocation(); 
+  const { id } = useParams(); 
   const navigate = useNavigate();
 
-  // initial values set from state
+
   const [title, setTitle] = useState(state?.title || "");
   const [val, setVal] = useState(state?.content || "");
 
-  // Handle change
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "title") setTitle(value);
     if (name === "content") setVal(value);
   };
 
-  // Update note
+  
   const handleUpdate = async () => {
     try {
       const updatedNote = { title, content: val };
       await axios.put(`http://localhost:3000/notes/${id}`, updatedNote);
 
       alert("Note updated successfully!");
-      navigate("/notes"); // wapas Notes page pe le jao
+      navigate("/"); 
     } catch (error) {
+      alert(error)
       console.error("Failed to update note:", error);
     }
   };

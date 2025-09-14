@@ -25,7 +25,7 @@ const Singnup = () => {
     console.log("Data was sent successfully:", res.data);
 
     setForm({ password: "", email: "", username: "" });
-    navigate('/')
+    navigate('/login')
 
     
   }

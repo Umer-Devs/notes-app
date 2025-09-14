@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-
 import { SearchCheck } from 'lucide-react';
 import { Sidebar } from '../../Componenets';
 import axios from 'axios';
@@ -24,10 +23,12 @@ const navigate = useNavigate();
   };
 
   // Fetch notes from backend
-  const fetchNotesData = async () => {
+  const userId = localStorage.getItem("userId"); // ✅
+  const fetchNotesData = async (id) => {
     try {
       setLoading(true);
-      const notesData = await axios.get('http://localhost:3000/notes');
+
+      const notesData = await axios.get(`http://localhost:3000/notes/${id}`);
       setOriginalData(notesData.data);
       setData(notesData.data);
     } catch (error) {
@@ -39,7 +40,7 @@ const navigate = useNavigate();
   };
 
   useEffect(() => {
-    fetchNotesData();
+    fetchNotesData(userId);
   }, []);
 
   // Format date function
@@ -75,6 +76,24 @@ const navigate = useNavigate();
         </main>
       </section>
     );
+  }
+
+  
+
+  const handlerDelete = async (id)=>{
+    try {
+      await axios.delete(`http://localhost:3000/notes/${id}`);
+      
+  // frontend state se bhi hata do
+    const updatedData = data.filter((val) => val._id !== id);
+    setData(updatedData);
+
+      
+      alert("notes was deleted sucessfully") ;
+    } catch (error) {
+      console.log("failed to delete the notes",error);
+      
+    }
   }
 
 
@@ -123,7 +142,7 @@ const navigate = useNavigate();
                         className="bg-blue-600/80 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 shadow-md hover:shadow-lg">
                         Edit
                       </button>
-                      <button className="bg-red-600/80 hover:bg-red-500 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 shadow-md hover:shadow-lg">
+                      <button onClick={()=>{handlerDelete(note._id)}} className="bg-red-600/80 hover:bg-red-500 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 shadow-md hover:shadow-lg">
                         Delete
                       </button>
                     </div>

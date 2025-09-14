@@ -33,7 +33,15 @@ app.post('/login', async (req,res)=>{
     if (!isMatch) {
       return res.status(400).send("Invalid email or password");
     }
-   res.status(200).send("login sucessfully") ;
+  
+      res.status(200).send({
+        message: "login successfully",
+        user: {
+          id: checkEmail._id,
+          username: checkEmail.username,
+          email: checkEmail.email
+        }
+      });
 
 }
    catch (error) {
@@ -91,17 +99,16 @@ try {
 
 // GET NOTES DATA 
 
-app.get('/notes', async(req,res)=>{
+app.get('/notes/:userId', async (req, res) => {
   try {
-    const getNotes = await  Notes.find();
-  res.json(getNotes);
-
+    const { userId } = req.params;
+    const getNotes = await Notes.find({ userId }); 
+    res.json(getNotes);
   } catch (error) {
-    console.log('failed to get notes ',error);
-    
+    console.log('failed to get notes ', error);
+    res.status(500).send("Server error while fetching notes");
   }
-  
-})
+});
 
 
 app.put('/notes/:id' ,  async (req,res)=>{
@@ -112,7 +119,8 @@ app.put('/notes/:id' ,  async (req,res)=>{
           id,
           updatedData,
           {name:true}
-        )
+        );
+        res.status(200).send("data is updated sucessfully ")
          
   } catch (error) {
     console.log("failed to update the data  ",error);
@@ -120,7 +128,18 @@ app.put('/notes/:id' ,  async (req,res)=>{
   }
 })
 
+// delte notes 
 
+app.delete('/notes/:id', async(req,res)=>{
+  try {
+    const {id} = req.params
+    const dalteNotes = await Notes.findByIdAndDelete(id);
+    res.status(200).send("note was deleted sucessfully");
+  } catch (error) {
+    console.log("failed to delete the notes",error);
+    
+  }
+})
 
 
 
