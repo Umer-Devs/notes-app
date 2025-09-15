@@ -26,6 +26,10 @@ const Login = () => {
 
     // alert(res.data); // backend ka message show karega
     localStorage.setItem("userId", res.data.user.id);
+
+   localStorage.setItem("userName" , res.data.user.username)
+   
+     
     navigate('/')
   } catch (error) {
     alert(" Login failed:", error.response?.data || error.message);
@@ -78,5 +82,6 @@ const Login = () => {
     </section>
   );
 };
+
 
 export default Login;

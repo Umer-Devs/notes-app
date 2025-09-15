@@ -6,6 +6,7 @@ const Sidebar = () => {
   
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -15,6 +16,10 @@ const Sidebar = () => {
     { name: "Create Notes", path: "/create-notes" },
     
   ];
+
+  const myUserName = localStorage.getItem("userName");
+  const finalNmae = `${myUserName ? myUserName :' user not defined'} `
+  
 
   return (
     <>
@@ -33,7 +38,7 @@ const Sidebar = () => {
             />
           </div>
           <p className="text-primary-light font-bold text-center text-lg sm:text-xl">
-            UserName
+            {finalNmae}
           </p>
         </div>
 
